@@ -1445,11 +1445,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Users\\Documentos\\GitHub\\ProjetoCuidar_API\\ProjetoCuidar_API.csproj",
+      "projectUniqueName": "D:\\Users\\Documentos\\GitHub\\ProjetoCuidar_API_github\\ProjetoCuidar_API\\ProjetoCuidar_API.csproj",
       "projectName": "ProjetoCuidar_API",
-      "projectPath": "D:\\Users\\Documentos\\GitHub\\ProjetoCuidar_API\\ProjetoCuidar_API.csproj",
+      "projectPath": "D:\\Users\\Documentos\\GitHub\\ProjetoCuidar_API_github\\ProjetoCuidar_API\\ProjetoCuidar_API.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\Users\\Documentos\\GitHub\\ProjetoCuidar_API\\obj\\",
+      "outputPath": "D:\\Users\\Documentos\\GitHub\\ProjetoCuidar_API_github\\ProjetoCuidar_API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",

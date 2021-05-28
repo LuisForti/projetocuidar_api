@@ -10,26 +10,26 @@ namespace ProjetoCuidar_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : Controller
+    public class PetController : Controller
     {
         private readonly CuidarContext _context;
-        public UsuarioController(CuidarContext context)
+        public PetController(CuidarContext context)
         {
             // construtor
             _context = context;
         }
 
         [HttpGet]
-        public ActionResult<List<Usuario>> GetAll() {
-            return _context.usuario.ToList();
+        public ActionResult<List<Pet>> GetAll() {
+            return _context.pet.ToList();
         }
         
-        [HttpGet("{UsuarioId}")]
-        public ActionResult<List<Usuario>> Get(int UsuarioId) 
+        [HttpGet("{PetId}")]
+        public ActionResult<List<Pet>> Get(int PetId) 
         {
             try
             {
-                var result = _context.usuario.Find(UsuarioId);
+                var result = _context.pet.Find(PetId);
                 if (result == null)
                 {
                     return NotFound();
@@ -43,15 +43,15 @@ namespace ProjetoCuidar_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> post(Usuario model)
+        public async Task<ActionResult> post(Pet model)
         {
             try
             {
-                _context.usuario.Add(model);
+                _context.pet.Add(model);
                 if (await _context.SaveChangesAsync() == 1)
                 {
                     //return Ok();
-                    return Created($"/api/usuario/{model.Id}",model);
+                    return Created($"/api/pet/{model.Id}",model);
                 }
             }
             catch
@@ -62,24 +62,24 @@ namespace ProjetoCuidar_API.Controllers
             return BadRequest();
         }
 
-        [HttpPut("{UsuarioId}")]
-        public async Task<IActionResult> put(int UsuarioId, Usuario dadosUsuarioAlt)
+        [HttpPut("{PetId}")]
+        public async Task<IActionResult> put(int PetId, Pet dadosPetAlt)
         {
             try {
                 //verifica se existe aluno a ser alterado
-                var result = await _context.usuario.FindAsync(UsuarioId);
-                if (UsuarioId != result.Id)
+                var result = await _context.pet.FindAsync(PetId);
+                if (PetId != result.Id)
                 {
                     return BadRequest();
                 }
-                result.nomeUsuario = dadosUsuarioAlt.nomeUsuario;
-                result.senhaUsuario = dadosUsuarioAlt.senhaUsuario;
-                result.emailUsuario = dadosUsuarioAlt.emailUsuario;
-                result.telefone = dadosUsuarioAlt.telefone;
-                result.enderecoUsuario = dadosUsuarioAlt.enderecoUsuario;
-                result.fotoUsuario = dadosUsuarioAlt.fotoUsuario;
+                result.nomePet = dadosPetAlt.nomePet;
+                result.fotoPet = dadosPetAlt.fotoPet;
+                result.raca = dadosPetAlt.raca;
+                result.idade = dadosPetAlt.idade;
+                result.condicoesMedicas = dadosPetAlt.condicoesMedicas;
+                result.descricao = dadosPetAlt.descricao;
                 await _context.SaveChangesAsync();
-                return Created($"/api/aluno/{dadosUsuarioAlt.Id}", dadosUsuarioAlt);
+                return Created($"/api/aluno/{dadosPetAlt.Id}", dadosPetAlt);
             }
             catch
             {
@@ -87,19 +87,19 @@ namespace ProjetoCuidar_API.Controllers
             }
         }
 
-        [HttpDelete("{UsuarioId}")]
-        public async Task<ActionResult> delete(int UsuarioId)
+        [HttpDelete("{PetId}")]
+        public async Task<ActionResult> delete(int PetId)
         {
             try
             {
                 //verifica se existe aluno a ser excluído
-                var usuario = await _context.usuario.FindAsync(UsuarioId);
-                if (usuario == null)
+                var pet = await _context.pet.FindAsync(PetId);
+                if (pet == null)
                 {
                     //método do EF
                     return NotFound();
                 }
-                _context.Remove(usuario);
+                _context.Remove(pet);
                 await _context.SaveChangesAsync();
                 return NoContent();
             }

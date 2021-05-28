@@ -8,28 +8,28 @@ using ProjetoCuidar_API.Models;
 
 namespace ProjetoCuidar_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/UsuarioFuncionario")]
     [ApiController]
-    public class UsuarioController : Controller
+    public class UsuarioFuncionarioController : Controller
     {
         private readonly CuidarContext _context;
-        public UsuarioController(CuidarContext context)
+        public UsuarioFuncionarioController(CuidarContext context)
         {
             // construtor
             _context = context;
         }
 
         [HttpGet]
-        public ActionResult<List<Usuario>> GetAll() {
-            return _context.usuario.ToList();
+        public ActionResult<List<UsuarioFuncionario>> GetAll() {
+            return _context.usuarioFuncionario.ToList();
         }
         
-        [HttpGet("{UsuarioId}")]
-        public ActionResult<List<Usuario>> Get(int UsuarioId) 
+        [HttpGet("{UsuarioFuncionarioId}")]
+        public ActionResult<List<UsuarioFuncionario>> Get(int UsuarioFuncionarioId) 
         {
             try
             {
-                var result = _context.usuario.Find(UsuarioId);
+                var result = _context.usuarioFuncionario.Find(UsuarioFuncionarioId);
                 if (result == null)
                 {
                     return NotFound();
@@ -43,15 +43,15 @@ namespace ProjetoCuidar_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> post(Usuario model)
+        public async Task<ActionResult> post(UsuarioFuncionario model)
         {
             try
             {
-                _context.usuario.Add(model);
+                _context.usuarioFuncionario.Add(model);
                 if (await _context.SaveChangesAsync() == 1)
                 {
                     //return Ok();
-                    return Created($"/api/usuario/{model.Id}",model);
+                    return Created($"/api/usuarioFuncionario/{model.Id}",model);
                 }
             }
             catch
@@ -62,24 +62,21 @@ namespace ProjetoCuidar_API.Controllers
             return BadRequest();
         }
 
-        [HttpPut("{UsuarioId}")]
-        public async Task<IActionResult> put(int UsuarioId, Usuario dadosUsuarioAlt)
+        [HttpPut("{UsuarioFuncionarioId}")]
+        public async Task<IActionResult> put(int UsuarioFuncionarioId, UsuarioFuncionario dadosUsuarioFuncionarioAlt)
         {
             try {
                 //verifica se existe aluno a ser alterado
-                var result = await _context.usuario.FindAsync(UsuarioId);
-                if (UsuarioId != result.Id)
+                var result = await _context.usuarioFuncionario.FindAsync(UsuarioFuncionarioId);
+                if (UsuarioFuncionarioId != result.Id)
                 {
                     return BadRequest();
                 }
-                result.nomeUsuario = dadosUsuarioAlt.nomeUsuario;
-                result.senhaUsuario = dadosUsuarioAlt.senhaUsuario;
-                result.emailUsuario = dadosUsuarioAlt.emailUsuario;
-                result.telefone = dadosUsuarioAlt.telefone;
-                result.enderecoUsuario = dadosUsuarioAlt.enderecoUsuario;
-                result.fotoUsuario = dadosUsuarioAlt.fotoUsuario;
+                result.idUsuarioPet = dadosUsuarioFuncionarioAlt.idUsuarioPet;
+                result.idFuncionario = dadosUsuarioFuncionarioAlt.idFuncionario;
+                result.dataDeAdocao = dadosUsuarioFuncionarioAlt.dataDeAdocao;
                 await _context.SaveChangesAsync();
-                return Created($"/api/aluno/{dadosUsuarioAlt.Id}", dadosUsuarioAlt);
+                return Created($"/api/usuarioFuncionario/{dadosUsuarioFuncionarioAlt.Id}", dadosUsuarioFuncionarioAlt);
             }
             catch
             {
@@ -87,19 +84,19 @@ namespace ProjetoCuidar_API.Controllers
             }
         }
 
-        [HttpDelete("{UsuarioId}")]
-        public async Task<ActionResult> delete(int UsuarioId)
+        [HttpDelete("{UsuarioFuncionarioId}")]
+        public async Task<ActionResult> delete(int UsuarioFuncionarioId)
         {
             try
             {
                 //verifica se existe aluno a ser excluído
-                var usuario = await _context.usuario.FindAsync(UsuarioId);
-                if (usuario == null)
+                var usuarioFuncionario = await _context.usuarioFuncionario.FindAsync(UsuarioFuncionarioId);
+                if (usuarioFuncionario == null)
                 {
                     //método do EF
                     return NotFound();
                 }
-                _context.Remove(usuario);
+                _context.Remove(usuarioFuncionario);
                 await _context.SaveChangesAsync();
                 return NoContent();
             }

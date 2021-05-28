@@ -8,6 +8,10 @@ namespace ProjetoCuidar_API.Data
         public CuidarContext(DbContextOptions<CuidarContext> options): base (options)
         {
         }
-        public DbSet<Usuario> Usuario {get; set;}
+        public DbSet<Usuario> usuario {get; set;}
+        public DbSet<Pet> pet {get; set;}
+        public DbSet<Funcionario> funcionario {get; set;}
+        public DbSet<UsuarioPet> usuarioPet {get; set;}
+        public DbSet<UsuarioFuncionario> usuarioFuncionario {get; set;}
     }
 }

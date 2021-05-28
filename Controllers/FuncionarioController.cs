@@ -10,26 +10,26 @@ namespace ProjetoCuidar_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : Controller
+    public class FuncionarioController : Controller
     {
         private readonly CuidarContext _context;
-        public UsuarioController(CuidarContext context)
+        public FuncionarioController(CuidarContext context)
         {
             // construtor
             _context = context;
         }
 
         [HttpGet]
-        public ActionResult<List<Usuario>> GetAll() {
-            return _context.usuario.ToList();
+        public ActionResult<List<Funcionario>> GetAll() {
+            return _context.funcionario.ToList();
         }
         
-        [HttpGet("{UsuarioId}")]
-        public ActionResult<List<Usuario>> Get(int UsuarioId) 
+        [HttpGet("{FuncionarioId}")]
+        public ActionResult<List<Funcionario>> Get(int FuncionarioId) 
         {
             try
             {
-                var result = _context.usuario.Find(UsuarioId);
+                var result = _context.funcionario.Find(FuncionarioId);
                 if (result == null)
                 {
                     return NotFound();
@@ -43,15 +43,15 @@ namespace ProjetoCuidar_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> post(Usuario model)
+        public async Task<ActionResult> post(Funcionario model)
         {
             try
             {
-                _context.usuario.Add(model);
+                _context.funcionario.Add(model);
                 if (await _context.SaveChangesAsync() == 1)
                 {
                     //return Ok();
-                    return Created($"/api/usuario/{model.Id}",model);
+                    return Created($"/api/funcionario/{model.Id}",model);
                 }
             }
             catch
@@ -62,24 +62,22 @@ namespace ProjetoCuidar_API.Controllers
             return BadRequest();
         }
 
-        [HttpPut("{UsuarioId}")]
-        public async Task<IActionResult> put(int UsuarioId, Usuario dadosUsuarioAlt)
+        [HttpPut("{FuncionarioId}")]
+        public async Task<IActionResult> put(int FuncionarioId, Funcionario dadosFuncionarioAlt)
         {
             try {
                 //verifica se existe aluno a ser alterado
-                var result = await _context.usuario.FindAsync(UsuarioId);
-                if (UsuarioId != result.Id)
+                var result = await _context.funcionario.FindAsync(FuncionarioId);
+                if (FuncionarioId != result.Id)
                 {
                     return BadRequest();
                 }
-                result.nomeUsuario = dadosUsuarioAlt.nomeUsuario;
-                result.senhaUsuario = dadosUsuarioAlt.senhaUsuario;
-                result.emailUsuario = dadosUsuarioAlt.emailUsuario;
-                result.telefone = dadosUsuarioAlt.telefone;
-                result.enderecoUsuario = dadosUsuarioAlt.enderecoUsuario;
-                result.fotoUsuario = dadosUsuarioAlt.fotoUsuario;
+                result.nomeFuncionario = dadosFuncionarioAlt.nomeFuncionario;
+                result.senhaFuncionario = dadosFuncionarioAlt.senhaFuncionario;
+                result.emailFuncionario = dadosFuncionarioAlt.emailFuncionario;
+                result.fotoFuncionario = dadosFuncionarioAlt.fotoFuncionario;
                 await _context.SaveChangesAsync();
-                return Created($"/api/aluno/{dadosUsuarioAlt.Id}", dadosUsuarioAlt);
+                return Created($"/api/aluno/{dadosFuncionarioAlt.Id}", dadosFuncionarioAlt);
             }
             catch
             {
@@ -87,19 +85,19 @@ namespace ProjetoCuidar_API.Controllers
             }
         }
 
-        [HttpDelete("{UsuarioId}")]
-        public async Task<ActionResult> delete(int UsuarioId)
+        [HttpDelete("{FuncionarioId}")]
+        public async Task<ActionResult> delete(int FuncionarioId)
         {
             try
             {
                 //verifica se existe aluno a ser excluído
-                var usuario = await _context.usuario.FindAsync(UsuarioId);
-                if (usuario == null)
+                var funcionario = await _context.funcionario.FindAsync(FuncionarioId);
+                if (funcionario == null)
                 {
                     //método do EF
                     return NotFound();
                 }
-                _context.Remove(usuario);
+                _context.Remove(funcionario);
                 await _context.SaveChangesAsync();
                 return NoContent();
             }

@@ -30,7 +30,9 @@ namespace ProjetoCuidar_API
             services.AddDbContext<CuidarContext>(
                 x => x.UseMySQL("server=localhost;database=projetocuidar;user=root")
             );
+            services.AddScoped<CuidarContext, CuidarContext>();
             services.AddControllers();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +44,8 @@ namespace ProjetoCuidar_API
             }
 
             //app.UseHttpsRedirection();
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseRouting();
 
